@@ -35,9 +35,16 @@ namespace ModuleTwo
         private static void Main(string[] args)
         {
             IModuleTwoInvoker invoker = new ModuleTwoInvoker();
-
-            //
-            //Your code here
+            // 1. Найдем файл
+            string[] filePatn = new string[2];
+            filePatn = invoker.FindFile();
+            // 2. Прочитаем и изменим содержимое
+            string content = string.Empty;
+            content = invoker.GetFileContent(filePatn[0], filePatn[1]);
+            // 3. Сохраним файл
+            var result = false;
+            result = invoker.SaveFile(content,filePatn[0], filePatn[1]);
+            Console.ReadLine();
             //
 
 

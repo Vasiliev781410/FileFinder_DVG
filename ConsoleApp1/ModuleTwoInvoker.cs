@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace ModuleTwo
@@ -19,17 +21,22 @@ namespace ModuleTwo
         private IFileReaderService _fileReaderService { get; }
         private IFileSaverService _fileSaverService { get; }
 
-        public string FindFile(string locationToSearch, string fileName)
+        public string[] FindFile()
         {
-            var result = string.Empty;
+            var result = new string[2];
 
             try
             {
-                result = _finderService.FindFile(locationToSearch, fileName);
+                Console.Write("Enter file name (only .txt file extension): ");
+                string find = Console.ReadLine();
+
+                Console.ReadKey();
+                result = _finderService.FindFile(@"D:\DVG\",find);
             }
             catch (Exception e)
-            {
-                // your code here
+            {            
+                Console.WriteLine(e.Message);
+                //throw e;
             }
 
             return result;
@@ -67,4 +74,4 @@ namespace ModuleTwo
             return result;
         }
     }
-
+}

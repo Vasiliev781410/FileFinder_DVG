@@ -8,10 +8,11 @@ namespace ModuleTwo
 {
     public interface IModuleTwoInvoker
     {
-        string FindFile(string locationToSearch, string fileName);
+        // string FindFile(string locationToSearch, string fileName);
+        string[] FindFile();
 
         string GetFileContent(string location, string fileName);
 
-        bool SaveFile(string content, string lcoation, string fileName);
+        bool SaveFile(string content, string location, string fileName);
     }
 }

@@ -3,34 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.IO;
 
 namespace ModuleTwo
 {
     public interface IFinderService
     {
-        List<string> FindFile(string baseDirectory, string fileName);
+        string[] FindFile(string baseDirectory, string fileName);
     }
+
 
     public class FinderService : IFinderService
     {
-        public void FinderFile()
-        {
-            var currentDirectory = Directory.GetCurrentDirectory();
-            Console.Write("Enter file name: ");
-            string find = Console.ReadLine();
+       
 
-            var files = FindFile(@"C:\", find);
-            Console.ReadKey();
-        }
-
-        public List<string> FindFile(string baseDirectory, string fileName)
+        public string[] FindFile(string baseDirectory, string fileName)
         {
+            
+
             var files = new List<string>();
+            string[] filePatn = new string[2];
 
             if (!Directory.Exists(baseDirectory))
             {
-                return files;
+                filePatn[0] = baseDirectory;
+                filePatn[1] = fileName;
+                return filePatn;
             }
 
             try
@@ -40,24 +39,39 @@ namespace ModuleTwo
 
                 if (files.Any()) // find 1st file and stop
                 {
-                    return files;
+                    filePatn[0] = baseDirectory;
+                    filePatn[1] = fileName;
+
+                    return filePatn;
                 }
 
                 var direcotires = Directory.GetDirectories(baseDirectory);
 
                 foreach (var directory in direcotires) // test all directory
                 {
-                    files.AddRange(FindFile(directory, fileName));
-
-                    if (files.Any())
+                    if (directory != "D:\\$RECYCLE.BIN")
                     {
-                        return files;
+                        files.AddRange(FindFile(directory, fileName));
+
+
+
+                        if (files.Any())
+                        {
+                            filePatn[0] = directory;
+                            filePatn[1] = fileName;
+
+                            return filePatn;
+                        }
                     }
                 }
             }
-            catch { }
+            catch(IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
-            return files;
+            return filePatn;
         }
     }
 }
+
