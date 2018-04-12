@@ -19,7 +19,7 @@ namespace ModuleTwo
             var result = false;
             
             string fileNameNew = ReNameFile(fileName);
-
+            location = location + "\\";
             using (StreamWriter writer = new StreamWriter(location + fileNameNew, true))
             {
                 writer.Write(content);
